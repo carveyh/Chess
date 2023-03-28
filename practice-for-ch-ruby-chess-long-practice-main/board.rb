@@ -28,6 +28,8 @@ class Board
 
 	def move_piece(start_pos, end_pos)
 		raise "no piece!" if self[start_pos].nil?
+
+        raise "please move piece to new position" if start_pos == end_pos
 		
 		#check end_pos:
 		end_pos.each do |ele|

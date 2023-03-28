@@ -14,6 +14,6 @@ class Piece
 	end
 
 	def move_into_check?(end_pos)
-		#check valid moves if king piece is there
+		#check valid moves if king piece is
 	end
 end

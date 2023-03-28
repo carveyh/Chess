@@ -34,6 +34,14 @@ class Manager < Employee
         total_salaries * multiplier
     end
 
+    def sum_employees
+        sum = 0
+        employees.each do |employee|
+            sum += employee.salary
+        end
+        sum
+    end
+
     attr_reader :employees
 end
 

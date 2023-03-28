@@ -30,17 +30,28 @@ class Manager < Employee
     end
 
     def bonus(multiplier)
-        total_salaries = employees.sum {|employee| employee.salary}
-        total_salaries * multiplier
-    end
+        # total_salaries = employees.sum {|employee| employee.salary}
+        # total_salaries * multiplier
 
-    def sum_employees
         sum = 0
         employees.each do |employee|
-            sum += employee.salary
+            if employee.is_a?(Manager)
+                sum += employee.bonus(multiplier) + (employee.salary * multiplier)
+            else
+                sum += employee.salary * multiplier
+            end
         end
+
         sum
     end
+
+    # def sum_employees
+    #     sum = 0
+    #     employees.each do |employee|
+    #         sum += employee.salary
+    #     end
+    #     sum
+    # end
 
     attr_reader :employees
 end

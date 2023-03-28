@@ -27,6 +27,20 @@ class Board
 	end
 
 	def move_piece(start_pos, end_pos)
+		raise "no piece!" if self[start_pos].nil?
+		
+		#check end_pos:
+		end_pos.each do |ele|
+			if ele < 0 || ele > 7
+				raise "invalid end position"
+			end
+		end
+
+		#Move piece
+		piece = self[start_pos]
+		self[end_pos] = piece
+		self[start_pos] = nil
+
 	end
 
 end

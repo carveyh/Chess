@@ -30,12 +30,34 @@ module Slideable
 	private
 
 	def grow_unblocked_moves_in_dir(dx, dy)
+		moves = []
 		x, y = pos
 		new_x = x + dx
 		new_y = y + dy
 		
-		#BOOKMARK: CHECK LOGIC IF NEW POSITION DOES NOT GO OOB, OR COLLIDE WITH ENEMY/ALLY PIECE
-		if board
+		while true
+
+			
+			#BOOKMARK: CHECK LOGIC IF NEW POSITION DOES NOT GO OOB, OR COLLIDE WITH ENEMY/ALLY PIECE
+			#check out OOB
+			if !(0..7).include?(new_x) || !(0..7).include?(new_y)
+				break
+			end
+			#now checking if collide with ally
+			if @board[new_x,new_y].symbol == self.symbol
+				break
+			end
+			#checking if collide wit enemy
+			if @board[new_x,new_y].symbol != self.symbol
+				
+			end
+			moves << [new_x, new_y]
+			new_x += dx
+			new_y += dy
+
+		end
+
+		moves
 	end
 
 	HORIZONTAL_DIRS = [[0,-1],[0,1],[1,0],[-1,0]]

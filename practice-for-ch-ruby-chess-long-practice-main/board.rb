@@ -1,5 +1,8 @@
 require_relative "piece.rb"
 require_relative "null_piece.rb"
+require_relative "rook_bishop_queen.rb"
+require_relative "knightking.rb"
+# require_relative "pawn.rb"
 
 
 class Board
@@ -10,17 +13,27 @@ class Board
 	end
 
     def populate_board
-        [0,1,6,7].each do |row_idx|
-            @board[row_idx].map! do |space|
-                Piece.new(nil,nil,nil)
+		backrow = [Rook,Knight,Bishop,Queen,King,Bishop,Knight,Rook]
+		[0].each do |row_idx|
+            @board[row_idx].each_with_index do |space,col_idx|				
+                self[[row_idx,col_idx]] = backrow[col_idx].new(:Black,self,[row_idx,col_idx])				
             end
         end
-
-				[2,3,4,5].each do |row_idx|
-					@board[row_idx].map! do |space|
-						NullPiece.instance
-					end
-				end
+		[7].each do |row_idx|
+            @board[row_idx].each_with_index do |space,col_idx|				
+                self[[row_idx,col_idx]] = backrow.reverse[col_idx].new(:White,self,[row_idx,col_idx])				
+            end
+        end
+        [1,6].each do |row_idx|
+            @board[row_idx].map! do |space|
+                Piece.new(nil,self,nil)
+            end
+        end
+		[2,3,4,5].each do |row_idx|
+			@board[row_idx].map! do |space|
+				NullPiece.instance
+			end
+		end
     end
     
 	def [](pos) #pos == [x, y]

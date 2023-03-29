@@ -39,7 +39,7 @@ class Pawn < Piece
 		end
 
 		moves.select do |move|
-			!self.board[move].is_a?(NullPiece) && !self.board[move].nil?
+			self.board[move].is_a?(NullPiece) && !self.board[move].nil?
 		end
 	end
 
@@ -49,7 +49,7 @@ class Pawn < Piece
 		new_x = self.pos.first + forward_dir
 		moves = [[new_x,self.pos.last - 1], [new_x,self.pos.last + 1]]
 		moves.select do |move|
-			self.board[move].color != self.color
+			self.board[move].color != self.color && !self.board[move].is_a?(NullPiece)
 		end
 	end
 end

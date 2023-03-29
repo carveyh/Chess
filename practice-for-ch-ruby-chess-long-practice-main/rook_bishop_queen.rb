@@ -28,11 +28,22 @@ module Slideable
 	end
 	
 	private
+
+	def grow_unblocked_moves_in_dir(dx, dy)
+		x, y = pos
+		new_x = x + dx
+		new_y = y + dy
+		
+		#BOOKMARK: CHECK LOGIC IF NEW POSITION DOES NOT GO OOB, OR COLLIDE WITH ENEMY/ALLY PIECE
+		if board
+	end
+
 	HORIZONTAL_DIRS = [[0,-1],[0,1],[1,0],[-1,0]]
 	DIAGONAL_DIRS = [[-1,-1],[-1,1],[1,-1],[1,1]]
 end
 
 class Rook < Piece
+	include Slideable
 
 	private
 	def move_dirs

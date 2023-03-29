@@ -58,6 +58,8 @@ class Board
 			end
 		end
 
+		#TODO: DOES NOT CHANGE PIECE'S POSITION
+
 		#Move piece
 		piece = self[start_pos]
 		self[end_pos] = piece

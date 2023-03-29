@@ -27,7 +27,7 @@ module Slideable
 		move
 	end
 	
-	private
+	# private
 
 	def grow_unblocked_moves_in_dir(dx, dy)
 		moves = []
@@ -43,11 +43,11 @@ module Slideable
 				break
 			end
 			#now checking if collide with ally
-			if @board[new_x,new_y].symbol == self.symbol
+			if @board[[new_x,new_y]].symbol == self.symbol
 				break
 			end
 			#checking if collide wit enemy
-			if !@board[new_x,new_y].is_a?(NullPiece)
+			if !@board[[new_x,new_y]].is_a?(NullPiece)
 				moves << [new_x, new_y]
 				break	
 			end

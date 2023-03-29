@@ -2,7 +2,7 @@ require_relative "piece.rb"
 require_relative "null_piece.rb"
 require_relative "rook_bishop_queen.rb"
 require_relative "knightking.rb"
-# require_relative "pawn.rb"
+require_relative "pawn.rb"
 
 
 class Board
@@ -24,9 +24,14 @@ class Board
                 self[[row_idx,col_idx]] = backrow.reverse[col_idx].new(:White,self,[row_idx,col_idx])				
             end
         end
-        [1,6].each do |row_idx|
-            @board[row_idx].map! do |space|
-                Piece.new(nil,self,nil)
+        [1].each do |row_idx|
+            @board[row_idx].each_with_index do |space, col_idx|
+                self[[row_idx,col_idx]] = Pawn.new(:Black,self,[row_idx,col_idx])
+            end
+        end
+		[6].each do |row_idx|
+            @board[row_idx].each_with_index do |space, col_idx|
+                self[[row_idx,col_idx]] = Pawn.new(:White,self,[row_idx,col_idx])
             end
         end
 		[2,3,4,5].each do |row_idx|
@@ -57,11 +62,13 @@ class Board
 				raise "invalid end position"
 			end
 		end
-
-		#TODO: DOES NOT CHANGE PIECE'S POSITION
+		piece = self[start_pos]
+		p piece.moves
+		raise "invalid move!!!" if !piece.moves.include?(end_pos)
 
 		#Move piece
-		piece = self[start_pos]
+		
+		piece.pos = end_pos
 		self[end_pos] = piece
 		self[start_pos] = NullPiece.instance
 

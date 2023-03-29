@@ -5,7 +5,7 @@ class NullPiece < Piece
 	include Singleton
 
 	def initialize
-		# super
+		@color = :Null
 	end
 
 	def moves
@@ -15,4 +15,7 @@ class NullPiece < Piece
 	def symbol
 		"_"
 	end
+
+	attr_reader :color
+	
 end

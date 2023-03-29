@@ -36,7 +36,6 @@ module Slideable
 		new_y = y + dy
 		
 		while true
-
 			
 			#BOOKMARK: CHECK LOGIC IF NEW POSITION DOES NOT GO OOB, OR COLLIDE WITH ENEMY/ALLY PIECE
 			#check out OOB
@@ -48,15 +47,15 @@ module Slideable
 				break
 			end
 			#checking if collide wit enemy
-			if @board[new_x,new_y].symbol != self.symbol
-				
+			if !@board[new_x,new_y].is_a?(NullPiece)
+				moves << [new_x, new_y]
+				break	
 			end
 			moves << [new_x, new_y]
 			new_x += dx
 			new_y += dy
 
 		end
-
 		moves
 	end
 

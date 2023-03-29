@@ -1,4 +1,5 @@
 require_relative "piece.rb"
+require_relative "null_piece.rb"
 
 
 class Board
@@ -11,9 +12,15 @@ class Board
     def populate_board
         [0,1,6,7].each do |row_idx|
             @board[row_idx].map! do |space|
-                Piece.new
+                Piece.new(nil,nil,nil)
             end
         end
+
+				[2,3,4,5].each do |row_idx|
+					@board[row_idx].map! do |space|
+						NullPiece.instance
+					end
+				end
     end
     
 	def [](pos) #pos == [x, y]
@@ -27,7 +34,7 @@ class Board
 	end
 
 	def move_piece(start_pos, end_pos)
-		raise "no piece!" if self[start_pos].nil?
+		raise "no piece!" if self[start_pos].is_a?(NullPiece)
 
         raise "please move piece to new position" if start_pos == end_pos
 		
@@ -41,7 +48,7 @@ class Board
 		#Move piece
 		piece = self[start_pos]
 		self[end_pos] = piece
-		self[start_pos] = nil
+		self[start_pos] = NullPiece.instance
 
 	end
 

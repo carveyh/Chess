@@ -1,7 +1,7 @@
 require_relative "piece.rb"
 
 module Slideable
-	
+
 	def horizontal_dirs
 		HORIZONTAL_DIRS
 	end
@@ -10,24 +10,23 @@ module Slideable
 		DIAGONAL_DIRS
 	end
 
-	def moves(start_pos)
+	def moves
 		move = []
-		horizontal_dirs.each do |step|
-			origin = start_pos
-			x, y = origin
-			step_x, step_y = step
-			new_x = x + step_x
-			new_y = y + step_y
-			until new_x < 0 || new_x > 7 || new_y < 0 || new_y > 7
-				move << [new_x, new_y]
-				new_x += step_x
-				new_y += step_y
-			end
+		move_dirs.each do |dir|
+			dx, dy = dir
+			move += grow_unblocked_moves_in_dir(dx, dy)
 		end
 		move
 	end
 	
-	# private
+	private
+
+	HORIZONTAL_DIRS = [[0,-1],[0,1],[1,0],[-1,0]].freeze
+	DIAGONAL_DIRS = [[-1,-1],[-1,1],[1,-1],[1,1]].freeze
+
+	def move_dirs
+		raise NotImplementedError
+	end
 
 	def grow_unblocked_moves_in_dir(dx, dy)
 		moves = []
@@ -43,7 +42,7 @@ module Slideable
 				break
 			end
 			#now checking if collide with ally
-			if @board[[new_x,new_y]].symbol == self.symbol
+			if @board[[new_x,new_y]].color == self.color
 				break
 			end
 			#checking if collide wit enemy
@@ -58,9 +57,6 @@ module Slideable
 		end
 		moves
 	end
-
-	HORIZONTAL_DIRS = [[0,-1],[0,1],[1,0],[-1,0]]
-	DIAGONAL_DIRS = [[-1,-1],[-1,1],[1,-1],[1,1]]
 end
 
 class Rook < Piece
@@ -72,5 +68,32 @@ class Rook < Piece
 
 	private
 	def move_dirs
+		horizontal_dirs 
+	end
+end
+
+class Bishop < Piece
+	include Slideable
+
+	def symbol
+		:Bp
+	end
+
+	private
+	def move_dirs
+		diagonal_dirs 
+	end
+end
+
+class Queen < Piece
+	include Slideable
+
+	def symbol
+		:Qu
+	end
+
+	private
+	def move_dirs
+		diagonal_dirs + horizontal_dirs
 	end
 end
